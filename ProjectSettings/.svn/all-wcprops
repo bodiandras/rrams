@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/rampaging-rams-development/!svn/ver/18/trunk/ProjectSettings
+END
+NavMeshLayers.asset
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/rampaging-rams-development/!svn/ver/5/trunk/ProjectSettings/NavMeshLayers.asset
+END
+DynamicsManager.asset
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/rampaging-rams-development/!svn/ver/5/trunk/ProjectSettings/DynamicsManager.asset
+END
+NetworkManager.asset
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/rampaging-rams-development/!svn/ver/5/trunk/ProjectSettings/NetworkManager.asset
+END
+TagManager.asset
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/rampaging-rams-development/!svn/ver/5/trunk/ProjectSettings/TagManager.asset
+END
+EditorBuildSettings.asset
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/rampaging-rams-development/!svn/ver/21/trunk/ProjectSettings/EditorBuildSettings.asset
+END
+EditorSettings.asset
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/rampaging-rams-development/!svn/ver/5/trunk/ProjectSettings/EditorSettings.asset
+END
+ProjectSettings.asset
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/rampaging-rams-development/!svn/ver/25/trunk/ProjectSettings/ProjectSettings.asset
+END
+QualitySettings.asset
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/rampaging-rams-development/!svn/ver/23/trunk/ProjectSettings/QualitySettings.asset
+END
+TimeManager.asset
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/rampaging-rams-development/!svn/ver/5/trunk/ProjectSettings/TimeManager.asset
+END
+InputManager.asset
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/rampaging-rams-development/!svn/ver/5/trunk/ProjectSettings/InputManager.asset
+END
+AudioManager.asset
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/rampaging-rams-development/!svn/ver/5/trunk/ProjectSettings/AudioManager.asset
+END

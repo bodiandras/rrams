@@ -1,0 +1,34 @@
+<xml>
+	<ram color="ramBlue" x="10" y="9" />
+	<ram color="ramGray" x="2" y="0" />
+	<ram color="ramRed" x="2" y="2" />
+	<ram color="ramYellow" x="7" y="9" />
+	
+	<goal color="ramRed" x="4" y="3" />
+	
+	<fence direction="top" x="5" y="6" />
+	<fence direction="left" x="5" y="6" />
+	<fence direction="top" x="6" y="6" />
+	<fence direction="right" x="6" y="6" />
+	<fence direction="bottom" x="5" y="5" />
+	<fence direction="left" x="5" y="5" />
+	<fence direction="bottom" x="6" y="5" />
+	<fence direction="right" x="6" y="5" />
+	
+	<fence direction="right" x="4" y="0" />
+	<fence direction="right" x="7" y="0" />
+	<fence direction="right" x="5" y="11" />
+	<fence direction="right" x="8" y="11" />
+	<fence direction="top" x="11" y="3" />
+	<fence direction="top" x="11" y="7" />
+	<fence direction="top" x="0" y="1" />
+	<fence direction="top" x="0" y="7" />
+
+	<fence direction="right" x="1" y="1" /><fence direction="bottom" x="1" y="1" />		
+	<fence direction="top" x="4" y="3" /><fence direction="right" x="4" y="3" />
+	<fence direction="right" x="8" y="5" /><fence direction="bottom" x="8" y="5" />
+	<fence direction="left" x="8" y="7" /><fence direction="bottom" x="8" y="7" />
+	<fence direction="right" x="9" y="10" /><fence direction="top" x="9" y="10" />
+	<fence direction="right" x="4" y="8" /><fence direction="top" x="4" y="8" />
+	<fence direction="left" x="3" y="6" /><fence direction="bottom" x="3" y="6" />
+</xml>

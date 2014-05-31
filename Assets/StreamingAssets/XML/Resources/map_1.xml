@@ -1,0 +1,38 @@
+<xml>
+	<ram color="ramBlue" x="2" y="1" />
+	<ram color="ramRed" x="1" y="10" />
+	<ram color="ramGray" x="10" y="10" />
+	<ram color="ramYellow" x="4" y="11" />
+	
+	<goal color="ramGray" x="9" y="3" />
+	
+	<fence direction="top" x="5" y="6" />
+	<fence direction="left" x="5" y="6" />
+	<fence direction="top" x="6" y="6" />
+	<fence direction="right" x="6" y="6" />
+	<fence direction="bottom" x="5" y="5" />
+	<fence direction="left" x="5" y="5" />
+	<fence direction="bottom" x="6" y="5" />
+	<fence direction="right" x="6" y="5" />
+	
+	<fence direction="right" x="2" y="1" />	
+	<fence direction="right" x="5" y="11" />
+	<fence direction="right" x="4" y="0" />
+	<fence direction="right" x="8" y="0" />
+	<fence direction="right" x="8" y="11" />
+	<fence direction="top" x="2" y="1" />
+	<fence direction="top" x="0" y="3" />
+	<fence direction="top" x="0" y="7" />
+	<fence direction="top" x="11" y="3" />
+	<fence direction="top" x="11" y="8" />	
+	
+	<fence direction="right" x="5" y="3" /><fence direction="bottom" x="5" y="3" />	
+	<fence direction="bottom" x="9" y="3" /><fence direction="left" x="9" y="3" />	
+	<fence direction="top" x="8" y="6" /><fence direction="right" x="8" y="6" />	
+	<fence direction="bottom" x="9" y="8" /><fence direction="right" x="9" y="8" />
+	<fence direction="bottom" x="7" y="9" /><fence direction="right" x="7" y="9" />
+	<fence direction="top" x="3" y="6" /><fence direction="right" x="3" y="6" />
+	<fence direction="top" x="2" y="9" /><fence direction="right" x="2" y="9" />
+
+	<scenery name="Tree_02_d" scale="0.05" x="0" y="0" z="0" />	
+</xml>

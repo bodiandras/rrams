@@ -1,0 +1,161 @@
+using System;
+using UnityEngine;
+
+public class NGui
+{
+	public int nrMoves = 0;
+	private Rect windowRect = new Rect (0, 0, (int)Screen.width , (int)Screen.height);
+	private Rect normalCenterWindow = new Rect((int)(Screen.width *0.25f),(int)(Screen.height*0.5f - Screen.width*0.15f), (int)(Screen.width *0.5f) ,(int)(Screen.width *0.2f) ); 
+	private bool showGameMenu = false;
+	private bool showScenarios = false;
+	
+	public bool showVictory = false;
+	
+	Main main;
+	//private MainMenu mainMenu = null;
+	float w,h;
+	public GUISkin mySkin, nextSkin, restartSkin, newSkin, undoSkin;
+	
+	public NGui(Main main)
+	{
+		this.main = main;
+		nextSkin = Resources.Load("next_button") as GUISkin;
+		restartSkin = Resources.Load("restart_button") as GUISkin;
+		newSkin = Resources.Load ("new_button") as GUISkin;
+		undoSkin = Resources.Load ("undo_button") as GUISkin;
+	}
+	
+	public NGui(MainMenu mainMenu)
+	{
+		//this.mainMenu = mainMenu;
+		this.h = Screen.height;
+		this.w = Screen.width;
+	}
+	
+	public void OnGUI() 
+	{		
+		GUIStyle style = new GUIStyle();
+		style.fontSize = 20;
+		
+		
+		//New
+		if(main.selectedLevel==0){
+			GUI.skin = newSkin;
+			if(GUI.Button(new Rect((int)Screen.width*0.1f, (int)Screen.height*0.94f,  (int)(Screen.width*0.05f), (int)(Screen.width*0.05f / 2.5f)), "")) {
+				main.New();
+			}
+		}
+		
+		
+		//Restart
+		if(main.selectedLevel==0) {
+			GUI.skin = restartSkin;		
+			if(GUI.Button(new Rect((int)Screen.width*0.2f, (int)Screen.height*0.94f ,(int)(Screen.width*0.1f),(int)(Screen.width*0.1f / 5)), "")) {
+				main.Restart();
+			}
+		}
+		
+		// Undo
+		GUI.skin = undoSkin;
+		if(GUI.Button(new Rect((int)Screen.width*0.35f, (int)Screen.height*0.94f, (int)(Screen.width*0.065f), (int)(Screen.width*0.065f / 3.5f)), "")) {
+			Application.Quit();
+		}
+		
+		
+		GUI.skin = null;
+		if(GUI.Button(new Rect((int)Screen.width*0.9f, (int)Screen.height*0.1f, 80, (int)Screen.height*0.05f), "Menu")) {
+			showGameMenu = true;
+		}
+		
+		if (showGameMenu) {
+			windowRect = GUI.Window (0, windowRect, GameMenu, "My Window");
+		}
+		
+		if(showVictory) {
+			if(!mySkin) {
+				mySkin = Resources.Load("main_menu") as GUISkin;
+			}
+			GUI.skin = mySkin;
+			windowRect = GUI.Window (0, normalCenterWindow, Victory, "");
+		}
+		
+	
+		
+		GUI.Label (new Rect((int)Screen.width*0.5f, (int)Screen.height*0.94f,100,50), "Moves:" + nrMoves, style );
+	}
+	
+	public void GameMenu(int windowID)
+	{
+		if(GUI.Button(new Rect((int)Screen.width*0.5f, (int)Screen.height*0.5f, 80,(int)Screen.height*0.05f), "New")) {
+			main.New();
+		}
+	}
+	
+	public void Victory(int windowID)
+	{
+		
+		float w = normalCenterWindow.width;
+		float h = normalCenterWindow.height;
+		
+		GUI.Label(new Rect(55, 20, 150, 150), "Points");
+		
+		
+		//Restart
+		GUI.skin = restartSkin;
+		if(GUI.Button(new Rect((int)(w*0.1f), (int)(h*0.75f), (int)(w*0.26f), (int)(w*0.26f / 5)), "")) {
+			main.Restart();
+			showVictory = false;
+		}
+		
+		//Next		
+		GUI.skin = nextSkin;
+		if(GUI.Button(new Rect((int)(w*0.6f), (int)(h*0.7f), (int)(w*0.26f), (int)(w*0.26f / 3)), "" )) {
+			main.NextLevel();
+			showVictory = false;
+		}
+		
+	}
+		
+	public bool MainMenu()
+	{
+		if(!mySkin) {
+			mySkin = Resources.Load("main_menu") as GUISkin;
+		}
+		GUI.skin = mySkin;
+		
+		if(showScenarios) {
+			Scenarios();
+			return true;
+		}
+		
+		if(GUI.Button(new Rect(w*0.2f, h*0.2f, w*0.35f, h*0.1f), "Scenarios")) {
+			showScenarios = true;
+		}
+		
+		if(GUI.Button(new Rect(w*0.2f, h*0.4f, w*0.35f, h*0.1f), "Random map")) {
+			PlayerPrefs.SetInt("selectedLevel", 0);
+			Application.LoadLevel("scene1");
+		}
+		
+		if(GUI.Button(new Rect(w*0.2f, h*0.6f, w*0.35f, h*0.1f), "Exit game")) {
+			Application.Quit();
+		}
+		return true;
+	}
+	
+	public void Scenarios()
+	{
+		int k=1,l=1;
+		for(int i=1; i<=36; i++) {
+			if(GUI.Button(new Rect(w * k * 0.08f, h * l * 0.128f, h*0.14f, h*0.11f), i.ToString()   )) {
+				PlayerPrefs.SetInt("selectedLevel", i);
+				Application.LoadLevel("scene1");
+			}
+			if(k++ == 6) {
+				k = 1;
+				l++;
+			}
+		}
+	}
+
+}

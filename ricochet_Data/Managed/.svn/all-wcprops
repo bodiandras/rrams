@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/rampaging-rams-development/!svn/ver/18/trunk/ricochet_Data/Managed
+END
+mscorlib.dll
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/rampaging-rams-development/!svn/ver/5/trunk/ricochet_Data/Managed/mscorlib.dll
+END
+Assembly-CSharp.dll
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/rampaging-rams-development/!svn/ver/5/trunk/ricochet_Data/Managed/Assembly-CSharp.dll
+END
+UnityEngine.dll
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/rampaging-rams-development/!svn/ver/5/trunk/ricochet_Data/Managed/UnityEngine.dll
+END

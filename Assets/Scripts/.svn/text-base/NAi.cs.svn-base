@@ -1,0 +1,24 @@
+using System;
+using UnityEngine;
+
+public class NAi
+{
+	public Main main;
+	
+	public NAi(Main main)
+	{
+		this.main = main;
+	}
+	
+	public bool CheckVictory()
+	{
+		foreach(NObject ram in main.rams ) {			
+			foreach(NObject goal in main.goals) {				
+				if(ram.color == goal.color && ram.x == goal.x && ram.y ==goal.y ) {
+					return true;
+				}				
+			}
+		}
+		return false;	
+	}
+}
