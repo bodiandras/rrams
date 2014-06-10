@@ -13,7 +13,7 @@ public class NGui
 	
 	Main main;
 	//private MainMenu mainMenu = null;
-	float w, h, sizeGui = 1f;
+	float w, h, sizeGui = 1f, sizeGui_small = 0.6f;
 	private float guiRatioX, guiRatioY;
 	
 	private Vector3 GUIsF;
@@ -23,6 +23,13 @@ public class NGui
 	public NGui(Main main)
 	{
 		this.main = main;
+		
+		this.h = Screen.height;
+		this.w = Screen.width;
+		guiRatioX = w/1920 * sizeGui_small;
+    	guiRatioY = h/1080 * sizeGui_small;		
+		GUIsF = new Vector3(guiRatioX,guiRatioY,1f);
+		
 		nextSkin = Resources.Load("next_button") as GUISkin;
 		restartSkin = Resources.Load("restart_button") as GUISkin;
 		newSkin = Resources.Load ("new_button") as GUISkin;
@@ -46,37 +53,42 @@ public class NGui
 	public void OnGUI() 
 	{		
 		GUIStyle style = new GUIStyle();
-		style.fontSize = 20;
+		style.fontSize = 20;	
 		
+			
 		
-		//New
-		if(main.selectedLevel==0){
-			GUI.skin = newSkin;
-			if(GUI.Button(new Rect((int)Screen.width*0.1f, (int)Screen.height*0.94f,  (int)(Screen.width*0.05f), (int)(Screen.width*0.05f / 2.5f)), "")) {
-				main.New();
-			}
+		if(!mySkin) {
+			mySkin = Resources.Load("main_menu") as GUISkin;
 		}
+		GUI.skin = mySkin;
+		GUI.skin.button.fontSize = 20;
+		//GUI.matrix = Matrix4x4.TRS(new Vector3(GUIsF.x,GUIsF.y,0),Quaternion.identity,GUIsF);
 		
+		if(GUI.Button(new Rect(w*0.5f, h-36 , 100, 30), "UNDO")) {
+			Application.Quit();
+		}
 		
 		//Restart
 		if(main.selectedLevel==0) {
-			GUI.skin = restartSkin;		
-			if(GUI.Button(new Rect((int)Screen.width*0.2f, (int)Screen.height*0.94f ,(int)(Screen.width*0.1f),(int)(Screen.width*0.1f / 5)), "")) {
+			if(GUI.Button(new Rect(w*0.5f + 100, h-36 , 120, 30), "RESTART")) {
 				main.Restart();
 			}
 		}
 		
-		// Undo
-		GUI.skin = undoSkin;
-		if(GUI.Button(new Rect((int)Screen.width*0.35f, (int)Screen.height*0.94f, (int)(Screen.width*0.065f), (int)(Screen.width*0.065f / 3.5f)), "")) {
-			Application.Quit();
+		//New
+		if(main.selectedLevel==0){
+			if(GUI.Button(new Rect(w*0.5f + 210, h-36 , 100, 30), "NEW")) {
+				main.New();
+			}
 		}
 		
+		GUI.Label (new Rect(w*0.5f - 360, h-30, 100, 50), "Moves: " + nrMoves, style );
 		
-		GUI.skin = null;
+		/*
+		GUI.skin = null;		
 		if(GUI.Button(new Rect((int)Screen.width*0.9f, (int)Screen.height*0.1f, 80, (int)Screen.height*0.05f), "Menu")) {
 			showGameMenu = true;
-		}
+		}*/
 		
 		if (showGameMenu) {
 			windowRect = GUI.Window (0, windowRect, GameMenu, "My Window");
@@ -92,7 +104,7 @@ public class NGui
 		
 	
 		
-		GUI.Label (new Rect((int)Screen.width*0.5f, (int)Screen.height*0.94f,100,50), "Moves:" + nrMoves, style );
+		
 	}
 	
 	public void GameMenu(int windowID)
