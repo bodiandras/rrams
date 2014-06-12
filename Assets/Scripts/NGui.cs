@@ -13,10 +13,11 @@ public class NGui
 	
 	Main main;
 	//private MainMenu mainMenu = null;
-	float w, h, sizeGui = 1f, sizeGui_small = 0.6f;
-	private float guiRatioX, guiRatioY;
+	float w, h, oW=1920, oH=1080, sizeGui = 1f, sizeGui_small = 0.6f;
+	private float guiRatioX, guiRatioY, guiRatiotX, guiRatiotY;
 	
-	private Vector3 GUIsF;
+	private Vector3 GUInF, GUIsF, GUItF;
+	
 	
 	public GUISkin mySkin, nextSkin, restartSkin, newSkin, undoSkin, mainMenu, mainMenuDisabled;
 	
@@ -26,9 +27,15 @@ public class NGui
 		
 		this.h = Screen.height;
 		this.w = Screen.width;
-		guiRatioX = w/1920 * sizeGui_small;
-    	guiRatioY = h/1080 * sizeGui_small;		
-		GUIsF = new Vector3(guiRatioX,guiRatioY,1f);
+		guiRatioX = w/oW;
+    	guiRatioY = h/oH;
+		
+		guiRatiotX = w / 0.5f;
+		guiRatiotY = h / 0.5f;	
+		GUInF = new Vector3(1f,1f,1f); // normal		
+		GUIsF = new Vector3(0.75f,0.75f,0.75f); // small
+		GUItF = new Vector3(0.5f,0.5f,0.5f); // tiny
+		
 		
 		nextSkin = Resources.Load("next_button") as GUISkin;
 		restartSkin = Resources.Load("restart_button") as GUISkin;
@@ -68,16 +75,21 @@ public class NGui
 			Application.Quit();
 		}
 		
+		GUI.matrix = Matrix4x4.TRS(new Vector3(GUItF.x,GUItF.y,0),Quaternion.identity,GUItF);
+		
 		//Restart
+		GUI.skin = restartSkin;
 		if(main.selectedLevel==0) {
-			if(GUI.Button(new Rect(w*0.5f + 100, h-36 , 120, 30), "RESTART")) {
+			if(GUI.Button(new Rect(guiRatiotX*0.5f + 200, guiRatiotY - 162 , 174, 157), "")) {
 				main.Restart();
 			}
 		}
 		
 		//New
+		GUI.skin = newSkin;
+		
 		if(main.selectedLevel==0){
-			if(GUI.Button(new Rect(w*0.5f + 210, h-36 , 100, 30), "NEW")) {
+			if(GUI.Button(new Rect(guiRatiotX*0.5f + 410, guiRatiotY - 158 , 108, 147), "")) {			
 				main.New();
 			}
 		}
