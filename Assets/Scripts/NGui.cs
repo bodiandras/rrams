@@ -75,7 +75,7 @@ public class NGui
 			Application.Quit();
 		}
 		
-		GUI.matrix = Matrix4x4.TRS(new Vector3(GUItF.x,GUItF.y,0),Quaternion.identity,GUItF);
+		//GUI.matrix = Matrix4x4.TRS(new Vector3(GUItF.x,GUItF.y,0),Quaternion.identity,GUItF);
 		
 		//Restart
 		GUI.skin = restartSkin;
@@ -86,10 +86,9 @@ public class NGui
 		}
 		
 		//New
-		GUI.skin = newSkin;
-		
+		GUI.skin = newSkin;		
 		if(main.selectedLevel==0){
-			if(GUI.Button(new Rect(guiRatiotX*0.5f + 410, guiRatiotY - 158 , 108, 147), "")) {			
+			if(GUI.Button(new Rect(w*0.5f + 410, h - 58 , 36, 50), "")) {			
 				main.New();
 			}
 		}
