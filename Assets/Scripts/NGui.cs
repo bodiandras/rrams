@@ -71,7 +71,10 @@ public class NGui
 		GUI.skin.button.fontSize = 20;
 		//GUI.matrix = Matrix4x4.TRS(new Vector3(GUIsF.x,GUIsF.y,0),Quaternion.identity,GUIsF);
 		
-		if(GUI.Button(new Rect(w*0.5f, h-36 , 100, 30), "UNDO")) {
+		
+		//Undo
+		GUI.skin = undoSkin;
+		if(GUI.Button(new Rect(w * 0.5f + 40, h-75 , 54, 75), "")) {
 			Application.Quit();
 		}
 		
@@ -80,7 +83,7 @@ public class NGui
 		//Restart
 		GUI.skin = restartSkin;
 		if(main.selectedLevel==0) {
-			if(GUI.Button(new Rect(guiRatiotX*0.5f + 200, guiRatiotY - 162 , 174, 157), "")) {
+			if(GUI.Button(new Rect(w * 0.5f + 110, h - 75 , 84, 75), "")) {
 				main.Restart();
 			}
 		}
@@ -88,7 +91,7 @@ public class NGui
 		//New
 		GUI.skin = newSkin;		
 		if(main.selectedLevel==0){
-			if(GUI.Button(new Rect(w*0.5f + 410, h - 58 , 36, 50), "")) {			
+			if(GUI.Button(new Rect(w * 0.5f + 215, h - 75 , 44, 75), "")) {			
 				main.New();
 			}
 		}
