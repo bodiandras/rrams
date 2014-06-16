@@ -221,6 +221,11 @@ public class Main : MonoBehaviour {
 		}		
 	}
 	
+	public void Undo()
+	{
+		ramGUI.nrMoves--;
+	}
+	
 	//load the next level
 	public void NextLevel()
 	{

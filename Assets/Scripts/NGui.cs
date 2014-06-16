@@ -19,7 +19,7 @@ public class NGui
 	private Vector3 GUInF, GUIsF, GUItF;
 	
 	
-	public GUISkin mySkin, nextSkin, restartSkin, newSkin, undoSkin, mainMenu, mainMenuDisabled;
+	public GUISkin mainSkin, nextSkin, restartSkin, newSkin, undoSkin, mainMenu, mainMenuDisabled;
 	
 	public NGui(Main main)
 	{
@@ -36,7 +36,7 @@ public class NGui
 		GUIsF = new Vector3(0.75f,0.75f,0.75f); // small
 		GUItF = new Vector3(0.5f,0.5f,0.5f); // tiny
 		
-		
+		mainSkin = Resources.Load("main_menu") as GUISkin;
 		nextSkin = Resources.Load("next_button") as GUISkin;
 		restartSkin = Resources.Load("restart_button") as GUISkin;
 		newSkin = Resources.Load ("new_button") as GUISkin;
@@ -60,22 +60,18 @@ public class NGui
 	public void OnGUI() 
 	{		
 		GUIStyle style = new GUIStyle();
-		style.fontSize = 20;	
-		
+		style.fontSize = 30;			
 			
 		
-		if(!mySkin) {
-			mySkin = Resources.Load("main_menu") as GUISkin;
-		}
-		GUI.skin = mySkin;
+		// Nr Moves
+		GUI.skin = mainSkin;
 		GUI.skin.button.fontSize = 20;
-		//GUI.matrix = Matrix4x4.TRS(new Vector3(GUIsF.x,GUIsF.y,0),Quaternion.identity,GUIsF);
-		
+		GUI.Label (new Rect(w*0.5f - 360, h-50, 100, 50), "Moves: " + nrMoves, style );
 		
 		//Undo
 		GUI.skin = undoSkin;
 		if(GUI.Button(new Rect(w * 0.5f + 40, h-75 , 54, 75), "")) {
-			Application.Quit();
+			main.Undo();
 		}
 		
 		//GUI.matrix = Matrix4x4.TRS(new Vector3(GUItF.x,GUItF.y,0),Quaternion.identity,GUItF);
@@ -94,9 +90,7 @@ public class NGui
 			if(GUI.Button(new Rect(w * 0.5f + 215, h - 75 , 44, 75), "")) {			
 				main.New();
 			}
-		}
-		
-		GUI.Label (new Rect(w*0.5f - 360, h-30, 100, 50), "Moves: " + nrMoves, style );
+		}	
 		
 		/*
 		GUI.skin = null;		
@@ -109,10 +103,10 @@ public class NGui
 		}
 		
 		if(showVictory) {
-			if(!mySkin) {
-				mySkin = Resources.Load("main_menu") as GUISkin;
+			if(!mainSkin) {
+				mainSkin = Resources.Load("main_menu") as GUISkin;
 			}
-			GUI.skin = mySkin;
+			GUI.skin = mainSkin;
 			windowRect = GUI.Window (0, normalCenterWindow, Victory, "");
 		}
 		
@@ -155,10 +149,10 @@ public class NGui
 		
 	public bool MainMenu()
 	{
-		if(!mySkin) {
-			mySkin = Resources.Load("main_menu") as GUISkin;
+		if(!mainSkin) {
+			mainSkin = Resources.Load("main_menu") as GUISkin;
 		}
-		GUI.skin = mySkin;
+		GUI.skin = mainSkin;
 		GUI.matrix = Matrix4x4.TRS(new Vector3(GUIsF.x,GUIsF.y,0),Quaternion.identity,GUIsF);
 		
 		if(showScenarios) {
