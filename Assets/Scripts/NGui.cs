@@ -50,11 +50,8 @@ public class NGui
 		this.w = Screen.width;		
 		
 		guiRatioX = w/1920 * sizeGui;
-    	guiRatioY = h/1080 * sizeGui;
-		
-		Debug.Log (w + " - " +guiRatioX);
-		GUIsF = new Vector3(guiRatioX,guiRatioY,1);
-		
+    	guiRatioY = h/1080 * sizeGui;		
+		GUIsF = new Vector3(guiRatioX,guiRatioY,1);	
 	}
 	
 	public void OnGUI() 

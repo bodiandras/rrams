@@ -1,12 +1,15 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Main : MonoBehaviour {
 	
 	public Generator objGenerator;
 	public NObject[] rams;
-	public NObject[] originalRams;
+	public NObject[] originalRams;	
 	public NObject[] goals;
+	
+	public List<History> history = new List<History>();	
 		
 	public float tileSize = 0.0250f;
 	
@@ -139,8 +142,7 @@ public class Main : MonoBehaviour {
 				ramAnimator.ClearPath();
 			}
 		}
-		if(ramAnimator.movementFinished) {
-			ramAnimator.movementFinished = false;
+		if(ramAnimator.movementFinished) {			
 			// check if player has completed the map
 			victory = ai.CheckVictory();
 			if(victory) {
@@ -166,10 +168,8 @@ public class Main : MonoBehaviour {
 		}
 	}
 	
-	public void moveRam(NObject ram, int[] destination)
-	{	
-		lastMovedRam = ram;
-		StartCoroutine(ramAnimator.Move(ram.gameObject, destination, 10));
+	public void moveRam(NObject ram, int[] destination, bool isUndo=false)
+	{	StartCoroutine(ramAnimator.Move(ram.gameObject, destination, 10));
 		string remove = "";					
 		for(int i=0; i<map[ram.x, ram.y].objects.Count; i++) {						
 			remove = (map[ram.x, ram.y].objects.GetKey(i).ToString().Contains("ram"))?map[ram.x, ram.y].objects.GetKey(i).ToString():remove;						
@@ -179,8 +179,7 @@ public class Main : MonoBehaviour {
 			NObject ram2 = map[ram.x, ram.y].objects[remove] as NObject;						
 			map[destination[0],destination[1]].objects.Add(remove, ram2);
 			ram2 = map[destination[0],destination[1]].objects[remove] as NObject;
-			map[ram.x, ram.y].objects.Remove(remove);
-			ramGUI.nrMoves++;
+			map[ram.x, ram.y].objects.Remove(remove);			
 		} else {
 			//Debug.Log ("ORIGIN ["+o[0]+","+o[1]+"]" + " DESTINATION ["+destination[0]+","+destination[1]+"]");
 		}
@@ -188,6 +187,15 @@ public class Main : MonoBehaviour {
 		ram.x = destination[0];
 		ram.y = destination[1];
 		
+		ram.lastPosition = ram.currentPosition;
+		ram.currentPosition = destination;
+		
+		if(!isUndo) {
+			lastMovedRam = ram;
+			var h = new History { ram = ram, lastPosition = ram.lastPosition };
+			history.Add (h);
+			ramGUI.nrMoves++;
+		}
 	}
 	
 	void OnGUI()
@@ -222,8 +230,13 @@ public class Main : MonoBehaviour {
 	}
 	
 	public void Undo()
-	{
-		ramGUI.nrMoves--;
+	{		
+		if((history.Count > 0) && (ramAnimator.movementFinished)) {
+			History h = history[history.Count-1];		
+			moveRam(h.ram, h.lastPosition, true);
+			history.RemoveAt(history.Count-1);
+			ramGUI.nrMoves--;
+		}
 	}
 	
 	//load the next level
@@ -289,8 +302,5 @@ public class Main : MonoBehaviour {
 			}
 		}
 		return null;
-	}
-	
-	
-		
+	}		
 }

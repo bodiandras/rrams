@@ -19,6 +19,7 @@ public class RamAnimator
 	
 	public IEnumerator Move(GameObject go, int[] to, float speed)
 	{
+		movementFinished = false;
 		Vector3 originalPosition = go.transform.position;
 		Vector3 moveToPosition = new Vector3(((to[0] - mapSize[0] / 2)*this.tileSize)+0.01f, 0.01f, ((to[1] - mapSize[1] / 2)*this.tileSize)+0.009f);
 		float distance = Mathf.Max(Mathf.Abs(originalPosition.x - moveToPosition.x) ,Mathf.Abs(originalPosition.z - moveToPosition.z));		

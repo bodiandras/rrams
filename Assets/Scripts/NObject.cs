@@ -6,7 +6,7 @@ public class NObject
 	public string name;
 	public GameObject gameObject;
 	public string color;
-	public int[] originalPosition;
+	public int[] currentPosition, originalPosition, lastPosition;
 	public int x,y;
 	
 	public int[] finalDestination;
@@ -21,5 +21,6 @@ public class NObject
 		this.color = color;
 		this.x = oPos[0];
 		this.y = oPos[1];
+		this.currentPosition = new int[] {x,y};
 	}
 }

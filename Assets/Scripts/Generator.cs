@@ -243,7 +243,7 @@ public class Generator
 		sc.radius = 0.042f;
 		sc.center= new Vector3(0f,0.03f,0.02f);
 		
-		NObject nORam = new NObject(ram, "ram"+i, new int[] {x,y}, ramColors[i]);
+		NObject nORam = new NObject(ram, "ram"+i, new int[] {x,y}, ramColors[i]);		
 		nORam.x = x;
 		nORam.y = y;
 		return nORam;
