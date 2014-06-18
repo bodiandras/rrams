@@ -79,6 +79,9 @@ public class Generator
 		}
     }
 	
+	/* Generates a random map
+	 */
+	
 	public bool GenerateMap()
 	{
 		this.ClearGoals(main.goals);
@@ -143,6 +146,8 @@ public class Generator
 		return true;
 	}
 	
+	/* Loads a pregenerated level
+	 */
 	public bool LoadLevel(int mapNr)
 	{
 		this.ClearGoals(main.goals);
@@ -204,7 +209,7 @@ public class Generator
 		ClearRams(main.rams);
 		main.rams = new NObject[5];					
 				
-		for(int i=0; i<5; i++) {
+		for(int i=0; i<4; i++) {
 			main.rams[i] = PlaceRam(i);		
 			main.map[main.rams[i].x, main.rams[i].y].objects.Add("ram"+i,main.rams[i]);
 		}

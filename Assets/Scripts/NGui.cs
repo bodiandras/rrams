@@ -5,8 +5,8 @@ public class NGui
 {
 	public int nrMoves = 0;
 	private Rect windowRect = new Rect (0, 0, (int)Screen.width , (int)Screen.height);
-	private Rect normalCenterWindow = new Rect((int)(Screen.width *0.25f),(int)(Screen.height*0.5f - Screen.width*0.15f), (int)(Screen.width *0.5f) ,(int)(Screen.width *0.2f) ); 
-	private bool showGameMenu = false;
+	private Rect normalCenterWindow = new Rect((int)(Screen.width *0.25f),(int)(Screen.height*0.5f - Screen.width*0.15f), (int)(Screen.width *0.5f) ,(int)(Screen.width *0.2f) ); 	
+	private bool showGameMenu = false , showPauseMenu = false;
 	private bool showScenarios = false;
 	
 	public bool showVictory = false;
@@ -19,7 +19,7 @@ public class NGui
 	private Vector3 GUInF, GUIsF, GUItF;
 	
 	
-	public GUISkin mainSkin, nextSkin, restartSkin, newSkin, undoSkin, mainMenu, mainMenuDisabled;
+	public GUISkin mainSkin, pauseSkin, menuSkin, nextSkin, restartSkin, newSkin, undoSkin, mainMenu, mainMenuDisabled;
 	
 	public NGui(Main main)
 	{
@@ -32,11 +32,13 @@ public class NGui
 		
 		guiRatiotX = w / 0.5f;
 		guiRatiotY = h / 0.5f;	
-		GUInF = new Vector3(1f,1f,1f); // normal		
+		GUInF = new Vector3(1f,1f,1f); // normal	
 		GUIsF = new Vector3(0.75f,0.75f,0.75f); // small
 		GUItF = new Vector3(0.5f,0.5f,0.5f); // tiny
 		
 		mainSkin = Resources.Load("main_menu") as GUISkin;
+		pauseSkin = Resources.Load ("pause_menu") as GUISkin;
+		menuSkin = Resources.Load ("menu_button") as GUISkin;		
 		nextSkin = Resources.Load("next_button") as GUISkin;
 		restartSkin = Resources.Load("restart_button") as GUISkin;
 		newSkin = Resources.Load ("new_button") as GUISkin;
@@ -58,7 +60,12 @@ public class NGui
 	{		
 		GUIStyle style = new GUIStyle();
 		style.fontSize = 30;			
-			
+		
+		// PauseMenu
+		GUI.skin = menuSkin;
+		if(GUI.Button(new Rect(w  - 80, 20 , 58, 75), "")) {
+			showPauseMenu = true;
+		}
 		
 		// Nr Moves
 		GUI.skin = mainSkin;
@@ -107,10 +114,18 @@ public class NGui
 			windowRect = GUI.Window (0, normalCenterWindow, Victory, "");
 		}
 		
-	
+		if(showPauseMenu) {
+			GUI.skin = pauseSkin;
+			windowRect = GUI.Window (0, new Rect((int)(Screen.width *0.25f),(int)(Screen.height*0.5f - Screen.width*0.15f), 299 ,400), PauseMenu, "");
+		}
 		
 		
 	}
+	public void PauseMenu(int windowID)
+	{
+	
+	}
+	
 	
 	public void GameMenu(int windowID)
 	{

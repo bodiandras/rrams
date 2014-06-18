@@ -239,6 +239,11 @@ public class Main : MonoBehaviour {
 		}
 	}
 	
+	public void MainMenu()
+	{
+		Application.LoadLevel("mainmenu");	
+	}
+	
 	//load the next level
 	public void NextLevel()
 	{
