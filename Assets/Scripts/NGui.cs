@@ -19,8 +19,9 @@ public class NGui
 	private Vector3 GUInF, GUIsF, GUItF;
 	
 	
-	public GUISkin mainSkin, pauseSkin, menuSkin, nextSkin, restartSkin, newSkin, undoSkin, mainMenu, mainMenuDisabled;
+	public GUISkin mainSkin, menuSkin, nextSkin, restartSkin, newSkin, undoSkin, mainMenu, mainMenuDisabled;
 	
+	public GUISkin pauseSkin, menuResumeSkin, menuMainMenuSkin;
 	public NGui(Main main)
 	{
 		this.main = main;
@@ -37,7 +38,11 @@ public class NGui
 		GUItF = new Vector3(0.5f,0.5f,0.5f); // tiny
 		
 		mainSkin = Resources.Load("main_menu") as GUISkin;
+		
 		pauseSkin = Resources.Load ("pause_menu") as GUISkin;
+		menuResumeSkin = Resources.Load ("menu_resume") as GUISkin;
+		menuMainMenuSkin = Resources.Load ("menu_main_menu") as GUISkin;
+			
 		menuSkin = Resources.Load ("menu_button") as GUISkin;		
 		nextSkin = Resources.Load("next_button") as GUISkin;
 		restartSkin = Resources.Load("restart_button") as GUISkin;
@@ -116,14 +121,23 @@ public class NGui
 		
 		if(showPauseMenu) {
 			GUI.skin = pauseSkin;
-			windowRect = GUI.Window (0, new Rect((int)(Screen.width *0.25f),(int)(Screen.height*0.5f - Screen.width*0.15f), 299 ,400), PauseMenu, "");
+			windowRect = GUI.Window (0, new Rect((int)(Screen.width * 0.5f - 149),(int)(Screen.height * 0.5f - 200), 299 ,400), PauseMenu, "");
 		}
 		
 		
 	}
 	public void PauseMenu(int windowID)
 	{
-	
+		GUI.skin = menuResumeSkin;
+		if(GUI.Button(new Rect(30, 262, 224, 71), "")) {
+			showPauseMenu = false;
+		}
+		
+		GUI.skin = menuMainMenuSkin;
+		if(GUI.Button(new Rect(30, 154, 224, 71), "")) {
+			Application.LoadLevel("mainmenu");
+		}
+		
 	}
 	
 	
