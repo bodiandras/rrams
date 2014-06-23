@@ -19,9 +19,12 @@ public class NGui
 	private Vector3 GUInF, GUIsF, GUItF;
 	
 	
-	public GUISkin mainSkin, menuSkin, nextSkin, restartSkin, newSkin, undoSkin, mainMenu, mainMenuDisabled;
+	public GUISkin mainSkin, menuSkin, nextSkin, restartSkin, newSkin, undoSkin, mainMenuDisabled;
 	
 	public GUISkin pauseSkin, menuResumeSkin, menuMainMenuSkin;
+	
+	public GUISkin woodenPanel;
+	
 	public NGui(Main main)
 	{
 		this.main = main;
@@ -38,6 +41,7 @@ public class NGui
 		GUItF = new Vector3(0.5f,0.5f,0.5f); // tiny
 		
 		mainSkin = Resources.Load("main_menu") as GUISkin;
+		woodenPanel = Resources.Load("wooden_panel") as GUISkin;
 		
 		pauseSkin = Resources.Load ("pause_menu") as GUISkin;
 		menuResumeSkin = Resources.Load ("menu_resume") as GUISkin;
@@ -203,42 +207,42 @@ public class NGui
 	
 	public void Scenarios()
 	{	
-		if(!mainMenu) {
-			mainMenu = Resources.Load("main_menu") as GUISkin;
-		}
 		if(!mainMenuDisabled) {
 			mainMenuDisabled = Resources.Load ("main_menu_disabled") as GUISkin;
+		}
+		if(!woodenPanel) {
+			woodenPanel = Resources.Load ("wooden_panel") as GUISkin;
 		}
 		
 		int lastCompleteLevel = PlayerPrefs.GetInt ("lastCompleteLevel");
 		
-		GUI.skin = mainMenu;
-		GUI.Label(new Rect( 140 , 140 , 400, 120), "Chapter 1");
+		
+		GUI.skin = woodenPanel;		
+		GUI.Label(new Rect(50, 30, 704, 482),"");
+		GUI.Label(new Rect(50, 550, 704, 482),"");
+		
+		GUI.skin = mainSkin;	
+		
+		GUI.Label(new Rect( 140 , 60 , 400, 120), "Chapter 1");
 		Scenarios_ShowLevels(1, 6, 140);		
 		
-		GUI.skin = mainMenu;
-		GUI.Label(new Rect( 140 , 440 , 400, 120), "Chapter 2");
+		GUI.skin = mainSkin;
+		GUI.Label(new Rect( 140 , 580 , 400, 120), "Chapter 2");
 		Scenarios_ShowLevels(7, 12, 440);
 		
-		GUI.skin = mainMenu;
+		GUI.skin = mainSkin;
 		GUI.Label(new Rect( 140 , 740 , 400, 120), "Chapter 3");
 		Scenarios_ShowLevels(13, 18, 740);
 	}
 	
 	public void Scenarios_ShowLevels(int from, int to , int y)
 	{		
-		int lastCompleteLevel = PlayerPrefs.GetInt ("lastCompleteLevel");
-		if(!mainMenu) {
-			mainMenu = Resources.Load("main_menu") as GUISkin;
-		}
-		if(!mainMenuDisabled) {
-			mainMenuDisabled = Resources.Load ("main_menu_disabled") as GUISkin;
-		}
+		int lastCompleteLevel = PlayerPrefs.GetInt ("lastCompleteLevel");	
 		
 		int l = 1, k = 1;
 		for(int i= from; i <= to; i++) {
 			if(lastCompleteLevel>=i-1) {
-				GUI.skin = mainMenu;
+				GUI.skin = mainSkin;
 				if(GUI.Button(new Rect((k-1) * 140 + 25, l * y + 82, 125, 120), i.ToString()   )) {
 				PlayerPrefs.SetInt("selectedLevel", i);
 				Application.LoadLevel("scene1");
