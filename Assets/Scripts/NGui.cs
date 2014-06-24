@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class NGui
+public class NGui : MonoBehaviour
 {
 	public int nrMoves = 0;
 	private Rect windowRect = new Rect (0, 0, (int)Screen.width , (int)Screen.height);
@@ -13,7 +13,7 @@ public class NGui
 	
 	Main main;
 	//private MainMenu mainMenu = null;
-	float w, h, oW=1920, oH=1080, sizeGui = 1f, sizeGui_small = 0.6f;
+	float w, h, oW=1920.0f, oH=1080.0f, sizeGui_normal = 1.5f, sizeGui_small = 1.1f;
 	private float guiRatioX, guiRatioY, guiRatiotX, guiRatiotY;
 	
 	private Vector3 GUInF, GUIsF, GUItF;
@@ -25,6 +25,8 @@ public class NGui
 	
 	public GUISkin woodenPanel;
 	
+	public Texture levelTexture;
+	
 	public NGui(Main main)
 	{
 		this.main = main;
@@ -33,11 +35,8 @@ public class NGui
 		this.w = Screen.width;
 		guiRatioX = w/oW;
     	guiRatioY = h/oH;
+			
 		
-		guiRatiotX = w / 0.5f;
-		guiRatiotY = h / 0.5f;	
-		GUInF = new Vector3(1f,1f,1f); // normal	
-		GUIsF = new Vector3(0.75f,0.75f,0.75f); // small
 		GUItF = new Vector3(0.5f,0.5f,0.5f); // tiny
 		
 		mainSkin = Resources.Load("main_menu") as GUISkin;
@@ -52,6 +51,8 @@ public class NGui
 		restartSkin = Resources.Load("restart_button") as GUISkin;
 		newSkin = Resources.Load ("new_button") as GUISkin;
 		undoSkin = Resources.Load ("undo_button") as GUISkin;
+		
+		levelTexture = Resources.Load ("level_104x110") as Texture;
 	}
 	
 	public NGui(MainMenu mainMenu)
@@ -60,9 +61,14 @@ public class NGui
 		this.h = Screen.height;
 		this.w = Screen.width;		
 		
-		guiRatioX = w/1920 * sizeGui;
-    	guiRatioY = h/1080 * sizeGui;		
-		GUIsF = new Vector3(guiRatioX,guiRatioY,1);	
+		guiRatioX = w/oW * sizeGui_normal;
+    	guiRatioY = h/oH * sizeGui_normal;		
+		GUInF = new Vector3(guiRatioX,guiRatioY,1); 
+		
+		guiRatioX = w/oW * sizeGui_small;
+    	guiRatioY = h/oH * sizeGui_small;		
+		GUIsF = new Vector3(guiRatioX,guiRatioY,1);
+		
 	}
 	
 	public void OnGUI() 
@@ -217,14 +223,15 @@ public class NGui
 		int lastCompleteLevel = PlayerPrefs.GetInt ("lastCompleteLevel");
 		
 		
-		GUI.skin = woodenPanel;		
+		GUI.skin = woodenPanel;
+		GUI.matrix = Matrix4x4.TRS(new Vector3(GUInF.x,GUInF.y,0),Quaternion.identity,GUInF);
 		GUI.Label(new Rect(50, 30, 704, 482),"");
 		GUI.Label(new Rect(50, 550, 704, 482),"");
 		
 		GUI.skin = mainSkin;	
 		
 		GUI.Label(new Rect( 140 , 60 , 400, 120), "Chapter 1");
-		Scenarios_ShowLevels(1, 6, 140);		
+		Scenarios_ShowLevels(1, 8, 140);		
 		
 		GUI.skin = mainSkin;
 		GUI.Label(new Rect( 140 , 580 , 400, 120), "Chapter 2");
@@ -237,12 +244,17 @@ public class NGui
 	
 	public void Scenarios_ShowLevels(int from, int to , int y)
 	{		
-		int lastCompleteLevel = PlayerPrefs.GetInt ("lastCompleteLevel");	
+		int lastCompleteLevel = PlayerPrefs.GetInt ("lastCompleteLevel");
+		
+		if(!levelTexture) {
+			levelTexture = Resources.Load ("level_104x110") as Texture;
+		}
 		
 		int l = 1, k = 1;
-		for(int i= from; i <= to; i++) {
+		for(int i= from; i < to; i++) {
 			if(lastCompleteLevel>=i-1) {
 				GUI.skin = mainSkin;
+				Scenarios_ShowLevel(i);
 				if(GUI.Button(new Rect((k-1) * 140 + 25, l * y + 82, 125, 120), i.ToString()   )) {
 				PlayerPrefs.SetInt("selectedLevel", i);
 				Application.LoadLevel("scene1");
@@ -252,11 +264,20 @@ public class NGui
 				GUI.Label(new Rect((k-1) * 140 + 40, l * y + 100, 125, 120), i.ToString());
 			}
 			
-			if(k++ == 6) {
+			if(k++ == 4) {
 				k = 1;
 				l++;
 			}
 		}
+	}
+	
+	public void Scenarios_ShowLevel(int i)
+	{
+		
+		int row = (int)Math.Floor((double)((i - 1) / 4));
+		Debug.Log (i);
+		GUI.DrawTexture(new Rect((i-1) * 140 + 25, row * 100 + 82, 104, 110), levelTexture);
+		
 	}
 
 }
