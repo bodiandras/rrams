@@ -10,11 +10,12 @@ public class NGui : MonoBehaviour
 	private bool showScenarios = false;
 	
 	public bool showVictory = false;
+	int lastCompleteLevel;
 	
 	Main main;
 	//private MainMenu mainMenu = null;
 	float w, h, oW=1920.0f, oH=1080.0f, sizeGui_normal = 1.5f, sizeGui_small = 1.1f;
-	private float guiRatioX, guiRatioY, guiRatiotX, guiRatiotY;
+	private float guiRatioX, guiRatioY, guiRatiotX, guiRatiotY, guiScrollY = 0, guiScrollX = 280;
 	
 	private Vector3 GUInF, GUIsF, GUItF;
 	
@@ -221,49 +222,43 @@ public class NGui : MonoBehaviour
 		}
 		
 		int lastCompleteLevel = PlayerPrefs.GetInt ("lastCompleteLevel");
-		
+		//guiScrollY -= 3f;
 		
 		GUI.skin = woodenPanel;
-		GUI.matrix = Matrix4x4.TRS(new Vector3(GUInF.x,GUInF.y,0),Quaternion.identity,GUInF);
-		GUI.Label(new Rect(50, 30, 704, 482),"");
-		GUI.Label(new Rect(50, 550, 704, 482),"");
+		//GUI.matrix = Matrix4x4.TRS(new Vector3(GUInF.x,GUInF.y,0),Quaternion.identity,GUInF);
+		GUI.Label(new Rect(50, 30 + guiScrollY, 704, 482),"");
+		GUI.Label(new Rect(50, 550 + guiScrollY, 704, 482),"");
+		GUI.Label(new Rect(50, 1070 + guiScrollY, 704, 482),"");
 		
 		GUI.skin = mainSkin;	
+		float oY = 130 + guiScrollY;
 		
-		GUI.Label(new Rect( 140 , 60 , 400, 120), "Chapter 1");
-		Scenarios_ShowLevels(1, 8, 140);		
-		
-		GUI.skin = mainSkin;
-		GUI.Label(new Rect( 140 , 580 , 400, 120), "Chapter 2");
-		Scenarios_ShowLevels(7, 12, 440);
+		GUI.Label(new Rect( 140 , 60 + guiScrollY, 400, 120), "Chapter 1");
+		Scenarios_ShowLevels(1, 8, 60 + oY);		
 		
 		GUI.skin = mainSkin;
-		GUI.Label(new Rect( 140 , 740 , 400, 120), "Chapter 3");
-		Scenarios_ShowLevels(13, 18, 740);
+		GUI.Label(new Rect( 140 , 580 + guiScrollY, 400, 120), "Chapter 2");
+		Scenarios_ShowLevels(9, 16, 580 + oY);
+		
+		GUI.skin = mainSkin;
+		GUI.Label(new Rect( 140 , 1100 + guiScrollY, 400, 120), "Chapter 3");
+		
+		Scenarios_ShowLevels(17, 24, 1100 + oY);
 	}
 	
-	public void Scenarios_ShowLevels(int from, int to , int y)
+	public void Scenarios_ShowLevels(int from, int to , float y)
 	{		
-		int lastCompleteLevel = PlayerPrefs.GetInt ("lastCompleteLevel");
+		lastCompleteLevel = PlayerPrefs.GetInt ("lastCompleteLevel");
 		
 		if(!levelTexture) {
 			levelTexture = Resources.Load ("level_104x110") as Texture;
 		}
 		
+		
+		
 		int l = 1, k = 1;
-		for(int i= from; i < to; i++) {
-			if(lastCompleteLevel>=i-1) {
-				GUI.skin = mainSkin;
-				Scenarios_ShowLevel(i);
-				if(GUI.Button(new Rect((k-1) * 140 + 25, l * y + 82, 125, 120), i.ToString()   )) {
-				PlayerPrefs.SetInt("selectedLevel", i);
-				Application.LoadLevel("scene1");
-			}
-			} else {
-				GUI.skin = mainMenuDisabled;
-				GUI.Label(new Rect((k-1) * 140 + 40, l * y + 100, 125, 120), i.ToString());
-			}
-			
+		for(int i= from; i <= to; i++) {
+			Scenarios_ShowLevel(i, y);		
 			if(k++ == 4) {
 				k = 1;
 				l++;
@@ -271,13 +266,23 @@ public class NGui : MonoBehaviour
 		}
 	}
 	
-	public void Scenarios_ShowLevel(int i)
+	public void Scenarios_ShowLevel(int i, float y)
 	{
 		
-		int row = (int)Math.Floor((double)((i - 1) / 4));
-		Debug.Log (i);
-		GUI.DrawTexture(new Rect((i-1) * 140 + 25, row * 100 + 82, 104, 110), levelTexture);
+		int row = ( (int)Math.Floor((double)(i-1) % 8) < 4 ) ? 0 : 1;
+		//GUI.matrix = Matrix4x4.TRS(new Vector3(GUInF.x,GUInF.y,0),Quaternion.identity,GUInF);
+		GUI.DrawTexture(new Rect(( (i-1)%4 -1) * 150 + guiScrollX, row * 161 + y, 104, 110), levelTexture);
 		
+		if(lastCompleteLevel>=i-1) {
+			GUI.skin = mainSkin;
+			if(GUI.Button(new Rect(( (i-1)%4 -1) * 150 + guiScrollX, row * 161 + y, 104, 110), i.ToString()   )) {				
+				PlayerPrefs.SetInt("selectedLevel", i);
+				Application.LoadLevel("scene1");
+			}
+		} else {
+				GUI.skin = mainMenuDisabled;				
+				GUI.Label(new Rect(( (i-1)%4 -1) * 150 + guiScrollX, row * 161 + y, 104, 110), i.ToString());
+		}	
 	}
 
 }
