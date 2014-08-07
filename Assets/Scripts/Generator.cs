@@ -148,8 +148,9 @@ public class Generator
 	
 	/* Loads a pregenerated level
 	 */
-	public bool LoadLevel(int mapNr)
+	public Level LoadLevel(int mapNr)
 	{
+		Level levelObject = new Level();
 		this.ClearGoals(main.goals);
 		main.goals = new NObject[1];
 		
@@ -183,6 +184,9 @@ public class Generator
 				k = main.utils.FindKey(ramColors,reader.GetAttribute("color")); 
 				PlaceGoal(k, System.Int32.Parse(reader.GetAttribute("x")), System.Int32.Parse(reader.GetAttribute("y")));
 				break;
+			case "best":
+				levelObject.bestMoves = System.Int32.Parse(reader.GetAttribute("moves"));
+				break;
 			case "fence":
 				main.map[System.Int32.Parse(reader.GetAttribute("x")), System.Int32.Parse(reader.GetAttribute("y"))].Set(reader.GetAttribute("direction"),1);
 				break;
@@ -201,7 +205,7 @@ public class Generator
 			}
 		}
 			PlaceFences();
-		return true;
+		return levelObject;
 	}
 	
 	public void PlaceRams() 

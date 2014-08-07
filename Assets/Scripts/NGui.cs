@@ -13,6 +13,7 @@ public class NGui : MonoBehaviour
 	int lastCompleteLevel;
 	
 	Main main;
+	MainMenu mainMenu;
 	//private MainMenu mainMenu = null;
 	float w, h, oW=1920.0f, oH=1080.0f, sizeGui_normal = 1.5f, sizeGui_small = 1.1f;
 	private float guiRatioX, guiRatioY, guiRatiotX, guiRatiotY, guiScrollY = 0, guiScrollX = 280;
@@ -26,7 +27,7 @@ public class NGui : MonoBehaviour
 	
 	public GUISkin woodenPanel;
 	
-	public Texture levelTexture, level3StarTexture;
+	public Texture levelTexture, level1StarTexture, level2StarTexture, level3StarTexture, levelLockedTexture;
 	
 	public NGui(Main main)
 	{
@@ -54,12 +55,12 @@ public class NGui : MonoBehaviour
 		undoSkin = Resources.Load ("undo_button") as GUISkin;
 		
 		levelTexture = Resources.Load ("level_104x110") as Texture;
-		level3StarTexture = Resources.Load ("level_3_star") as Texture;
+		level3StarTexture = Resources.Load ("level_3_star") as Texture;		
 	}
 	
 	public NGui(MainMenu mainMenu)
 	{
-		//this.mainMenu = mainMenu;
+		this.mainMenu = mainMenu;
 		this.h = Screen.height;
 		this.w = Screen.width;		
 		
@@ -254,7 +255,10 @@ public class NGui : MonoBehaviour
 		
 		if(!levelTexture) {
 			levelTexture = Resources.Load ("level_114") as Texture;
+			level1StarTexture = Resources.Load ("level_1_star") as Texture;
+			level2StarTexture = Resources.Load ("level_2_star") as Texture;
 			level3StarTexture = Resources.Load ("level_3_star") as Texture;
+			levelLockedTexture = Resources.Load ("level_locked") as Texture;
 		}		
 		
 		
@@ -275,15 +279,31 @@ public class NGui : MonoBehaviour
 		string lbl;
 		//GUI.matrix = Matrix4x4.TRS(new Vector3(GUInF.x,GUInF.y,0),Quaternion.identity,GUInF);
 		GUI.DrawTexture(new Rect(( (i-1)%4 -1) * 150 + guiScrollX, row * rH + y, 114, 114), levelTexture);
-		GUI.DrawTexture(new Rect(( (i-1)%4 -1) * 150 + guiScrollX - 8, row * rH + y + 65, 130, 75), level3StarTexture);
+		
 		if(lastCompleteLevel>=i-1) {
 			lbl = (i<10) ? "0" + i.ToString() : i.ToString();
 			if(GUI.Button(new Rect(( (i-1)%4 -1) * 150 + guiScrollX + 4, row * rH + y - 8, 104, 110), lbl )) {				
 				PlayerPrefs.SetInt("selectedLevel", i);
 				Application.LoadLevel("scene1");
 			}
-		} else {				
-			GUI.Label(new Rect(( (i-1)%4 -1) * 150 + guiScrollX, row * rH + y, 104, 110), i.ToString());
+			
+			Texture starTexture = level1StarTexture;
+			int stars = this.mainMenu.ramPrefs.GetLevelRating(i);
+			switch(stars) {
+			case 1: starTexture = level1StarTexture;
+				break;
+			case 2: starTexture = level2StarTexture;
+				break;
+			case 3: starTexture = level3StarTexture;
+				break;
+			default: starTexture = null;
+				break;
+			}	
+			if(starTexture) {
+				GUI.DrawTexture(new Rect(( (i-1)%4 -1) * 150 + guiScrollX - 8, row * rH + y + 65, 130, 75), starTexture);
+			}
+		} else {							
+			GUI.DrawTexture(new Rect(( (i-1)%4 -1) * 150 + guiScrollX + 17, row * rH + y + 14, 80, 80), levelLockedTexture);
 		}	
 	}
 

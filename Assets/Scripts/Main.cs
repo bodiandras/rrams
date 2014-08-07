@@ -27,6 +27,7 @@ public class Main : MonoBehaviour {
 	public NGui ramGUI;
 	public GuiTextDebug debugGUI;
 	public RamInput ramInput;
+	public RamPrefs ramPrefs =  new RamPrefs();
 	
 	string movementDirection;
 	float cameraRotation=0;
@@ -43,14 +44,13 @@ public class Main : MonoBehaviour {
 	public bool sceneLoaded = true;
 	
 	public int selectedLevel;
-	
+	public Level levelObject;
 	
 	public Utils utils = new Utils();
 	
 	// Use this for initialization
 	public void Start () 
-	{	
-		
+	{			
 		Camera.main.transform.LookAt(new Vector3(0f,0f,0f));
 		objGenerator = new Generator(this);
 		ai = new NAi(this);
@@ -59,7 +59,7 @@ public class Main : MonoBehaviour {
 			objGenerator.GenerateMap();
 			objGenerator.PlaceRams();
 		} else {
-			objGenerator.LoadLevel(selectedLevel);			
+			levelObject = objGenerator.LoadLevel(selectedLevel);			
 		}		
 		
 		objGenerator.PlaceTiles();
@@ -67,7 +67,8 @@ public class Main : MonoBehaviour {
 		
 		originalMap = utils.ArrCopy(map);		
 		originalRams = utils.ArrCopy(rams);		
-		ramAnimator = new RamAnimator(tileSize, mapSize, objGenerator);
+		ramAnimator = new RamAnimator(tileSize, mapSize, objGenerator);		
+		
 		
 		sceneLoaded = true;
 		ramGUI = new NGui(this);
@@ -256,12 +257,16 @@ public class Main : MonoBehaviour {
 	
 	public void Victory()
 	{
-		int lastCompleteLevel = PlayerPrefs.GetInt("lastCompleteLevel");
-		selectedLevel = PlayerPrefs.GetInt("selectedLevel");
-		if(selectedLevel>lastCompleteLevel) {
-			PlayerPrefs.SetInt("lastCompleteLevel", selectedLevel);
-		}
-		ramGUI.showVictory = true;		
+		if(!ramGUI.showVictory) {
+			int lastCompleteLevel = PlayerPrefs.GetInt("lastCompleteLevel");
+			selectedLevel = PlayerPrefs.GetInt("selectedLevel");
+			if(selectedLevel>lastCompleteLevel) {
+				PlayerPrefs.SetInt("lastCompleteLevel", selectedLevel);
+			}
+			//save level rating
+			ramPrefs.SaveLevelRating(selectedLevel, ramGUI.nrMoves - levelObject.bestMoves);
+			ramGUI.showVictory = true;
+		}	
 	}	
 	
 	/* Checks if destination can be accessed from certain direction

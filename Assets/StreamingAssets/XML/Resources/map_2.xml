@@ -5,6 +5,7 @@
 	<ram color="ramYellow" x="7" y="9" />
 	
 	<goal color="ramRed" x="4" y="3" />
+	<best moves="4" />
 	
 	<fence direction="top" x="5" y="6" />
 	<fence direction="left" x="5" y="6" />

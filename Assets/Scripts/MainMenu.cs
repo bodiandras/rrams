@@ -3,10 +3,12 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour {
 	public string[] ramColors;
+	public RamPrefs ramPrefs;
 	
 	public NGui ramGUI;
 	// Use this for initialization
 	void Start () {
+		this.ramPrefs = new RamPrefs();
 		ramColors = new string[4];		
 		ramColors[0] = "ramGray";
 		ramColors[1] = "ramRed";
