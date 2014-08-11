@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: f436dcded387be0448e88453f47ed77b
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - mainSkin: {instanceID: 0}
+  - menuSkin: {instanceID: 0}
+  - nextSkin: {instanceID: 0}
+  - restartSkin: {instanceID: 0}
+  - newSkin: {instanceID: 0}
+  - undoSkin: {instanceID: 0}
+  - mainMenuDisabled: {instanceID: 0}
+  - pauseSkin: {instanceID: 0}
+  - menuResumeSkin: {instanceID: 0}
+  - menuMainMenuSkin: {instanceID: 0}
+  - woodenPanel: {instanceID: 0}
+  - levelTexture: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
